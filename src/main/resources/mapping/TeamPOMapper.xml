@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.TeamPOMapper">
+    <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.TeamPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="shortname" jdbcType="VARCHAR" property="shortname"/>
+        <result column="microname" jdbcType="VARCHAR" property="microname"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="show_team" jdbcType="VARCHAR" property="showTeam"/>
+        <result column="source_id" jdbcType="INTEGER" property="sourceId"/>
+        <result column="sport_id" jdbcType="INTEGER" property="sportId"/>
+        <result column="age_id" jdbcType="INTEGER" property="ageId"/>
+        <result column="country_id" jdbcType="INTEGER" property="countryId"/>
+        <result column="venue_id" jdbcType="INTEGER" property="venueId"/>
+        <result column="club_id" jdbcType="INTEGER" property="clubId"/>
+        <!--<result column="lineup" jdbcType="VARCHAR" property="lineup"/>-->
+        <result column="starttime" jdbcType="TIMESTAMP" property="starttime"/>
+        <result column="last_modified" jdbcType="TIMESTAMP" property="lastModified"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, shortname, microname, type, gender, show_team, source_id, sport_id, age_id,
+        country_id, venue_id, club_id, starttime, last_modified
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from team
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByClub" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from team
+        where club_id = #{clubId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from team
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.TeamPO">
+        insert into team (id, name, shortname,
+        microname, type, gender,
+        show_team, source_id, sport_id,
+        age_id, country_id, venue_id,
+        club_id, lineup, starttime,
+        last_modified)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{shortname,jdbcType=VARCHAR},
+        #{microname,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR},
+        #{showTeam,jdbcType=VARCHAR}, #{sourceId,jdbcType=INTEGER}, #{sportId,jdbcType=INTEGER},
+        #{ageId,jdbcType=INTEGER}, #{countryId,jdbcType=INTEGER}, #{venueId,jdbcType=INTEGER},
+        #{clubId,jdbcType=INTEGER}, #{lineup,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP},
+        #{lastModified,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.TeamPO">
+        insert into team
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="shortname != null">
+                shortname,
+            </if>
+            <if test="microname != null">
+                microname,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="showTeam != null">
+                show_team,
+            </if>
+            <if test="sourceId != null">
+                source_id,
+            </if>
+            <if test="sportId != null">
+                sport_id,
+            </if>
+            <if test="ageId != null">
+                age_id,
+            </if>
+            <if test="countryId != null">
+                country_id,
+            </if>
+            <if test="venueId != null">
+                venue_id,
+            </if>
+            <if test="clubId != null">
+                club_id,
+            </if>
+            <if test="lineup != null">
+                lineup,
+            </if>
+            <if test="starttime != null">
+                starttime,
+            </if>
+            <if test="lastModified != null">
+                last_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="shortname != null">
+                #{shortname,jdbcType=VARCHAR},
+            </if>
+            <if test="microname != null">
+                #{microname,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="showTeam != null">
+                #{showTeam,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceId != null">
+                #{sourceId,jdbcType=INTEGER},
+            </if>
+            <if test="sportId != null">
+                #{sportId,jdbcType=INTEGER},
+            </if>
+            <if test="ageId != null">
+                #{ageId,jdbcType=INTEGER},
+            </if>
+            <if test="countryId != null">
+                #{countryId,jdbcType=INTEGER},
+            </if>
+            <if test="venueId != null">
+                #{venueId,jdbcType=INTEGER},
+            </if>
+            <if test="clubId != null">
+                #{clubId,jdbcType=INTEGER},
+            </if>
+            <if test="lineup != null">
+                #{lineup,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null">
+                #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastModified != null">
+                #{lastModified,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.TeamPO">
+        update team
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="shortname != null">
+                shortname = #{shortname,jdbcType=VARCHAR},
+            </if>
+            <if test="microname != null">
+                microname = #{microname,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="showTeam != null">
+                show_team = #{showTeam,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceId != null">
+                source_id = #{sourceId,jdbcType=INTEGER},
+            </if>
+            <if test="sportId != null">
+                sport_id = #{sportId,jdbcType=INTEGER},
+            </if>
+            <if test="ageId != null">
+                age_id = #{ageId,jdbcType=INTEGER},
+            </if>
+            <if test="countryId != null">
+                country_id = #{countryId,jdbcType=INTEGER},
+            </if>
+            <if test="venueId != null">
+                venue_id = #{venueId,jdbcType=INTEGER},
+            </if>
+            <if test="clubId != null">
+                club_id = #{clubId,jdbcType=INTEGER},
+            </if>
+            <if test="lineup != null">
+                lineup = #{lineup,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null">
+                starttime = #{starttime,jdbcType=TIMESTAMP},
+            </if>
+
+            last_modified = now(),
+
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.TeamPO">
+        update team
+        set name = #{name,jdbcType=VARCHAR},
+        shortname = #{shortname,jdbcType=VARCHAR},
+        microname = #{microname,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        gender = #{gender,jdbcType=VARCHAR},
+        show_team = #{showTeam,jdbcType=VARCHAR},
+        source_id = #{sourceId,jdbcType=INTEGER},
+        sport_id = #{sportId,jdbcType=INTEGER},
+        age_id = #{ageId,jdbcType=INTEGER},
+        country_id = #{countryId,jdbcType=INTEGER},
+        venue_id = #{venueId,jdbcType=INTEGER},
+        club_id = #{clubId,jdbcType=INTEGER},
+        lineup = #{lineup,jdbcType=VARCHAR},
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+        last_modified = #{lastModified,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteAll">
+        delete from team
+    </delete>
+</mapper>

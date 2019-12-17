@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.MatchResultPOMapper">
+    <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.MatchResultPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="match_id" jdbcType="INTEGER" property="matchId"/>
+        <result column="match_result" jdbcType="INTEGER" property="matchResult"/>
+        <result column="match_result_at" jdbcType="INTEGER" property="matchResultAt"/>
+        <result column="place" jdbcType="VARCHAR" property="place"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, match_id, match_result, match_result_at, place
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from match_result
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByMaIdAndPlace" resultType="com.haiqiu.cfadata.poentity.MatchResultPO">
+        select
+        <include refid="Base_Column_List"/>
+        from match_result
+        where match_id = #{maId,jdbcType=INTEGER}
+        and place = #{place,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByMaId" resultType="com.haiqiu.cfadata.poentity.MatchResultPO">
+        select
+        <include refid="Base_Column_List"/>
+        from match_result
+        where match_id = #{maId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByAll" parameterType="com.haiqiu.cfadata.poentity.MatchResultPO"
+            resultType="com.haiqiu.cfadata.poentity.MatchResultPO">
+        select
+        <include refid="Base_Column_List"/>
+        from match_result
+        where match_id = #{matchId,jdbcType=INTEGER}
+        and match_result_at = #{matchResultAt,jdbcType=INTEGER}
+        and place = #{place,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from match_result
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.MatchResultPO">
+        insert into match_result (id, match_id, match_result,
+        match_result_at, place)
+        values (#{id,jdbcType=INTEGER}, #{matchId,jdbcType=INTEGER}, #{matchResult,jdbcType=INTEGER},
+        #{matchResultAt,jdbcType=INTEGER}, #{place,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.MatchResultPO">
+        insert into match_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="matchId != null">
+                match_id,
+            </if>
+            <if test="matchResult != null">
+                match_result,
+            </if>
+            <if test="matchResultAt != null">
+                match_result_at,
+            </if>
+            <if test="place != null">
+                place,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="matchId != null">
+                #{matchId,jdbcType=INTEGER},
+            </if>
+            <if test="matchResult != null">
+                #{matchResult,jdbcType=INTEGER},
+            </if>
+            <if test="matchResultAt != null">
+                #{matchResultAt,jdbcType=INTEGER},
+            </if>
+            <if test="place != null">
+                #{place,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.MatchResultPO">
+        update match_result
+        <set>
+            <if test="matchId != null">
+                match_id = #{matchId,jdbcType=INTEGER},
+            </if>
+            <if test="matchResult != null">
+                match_result = #{matchResult,jdbcType=INTEGER},
+            </if>
+            <if test="matchResultAt != null">
+                match_result_at = #{matchResultAt,jdbcType=INTEGER},
+            </if>
+            <if test="place != null">
+                place = #{place,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.MatchResultPO">
+        update match_result
+        set match_id = #{matchId,jdbcType=INTEGER},
+        match_result = #{matchResult,jdbcType=INTEGER},
+        match_result_at = #{matchResultAt,jdbcType=INTEGER},
+        place = #{place,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteAll">
+        delete from match_result
+    </delete>
+</mapper>

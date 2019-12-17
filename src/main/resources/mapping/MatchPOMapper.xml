@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.MatchPOMapper">
+    <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.MatchPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="round_id" jdbcType="INTEGER" property="roundId"/>
+        <result column="matchday" jdbcType="INTEGER" property="matchday"/>
+        <result column="group_matchday" jdbcType="INTEGER" property="groupMatchday"/>
+        <result column="match_date" jdbcType="TIMESTAMP" property="matchDate"/>
+        <!--<result column="match_time" jdbcType="VARCHAR" property="matchTime"/>-->
+        <result column="finished" jdbcType="VARCHAR" property="finished"/>
+        <result column="live_status" jdbcType="VARCHAR" property="liveStatus"/>
+        <result column="attendance" jdbcType="INTEGER" property="attendance"/>
+        <result column="home_id" jdbcType="INTEGER" property="homeId"/>
+        <result column="away_id" jdbcType="INTEGER" property="awayId"/>
+        <result column="venue_id" jdbcType="INTEGER" property="venueId"/>
+        <result column="referee_id" jdbcType="INTEGER" property="refereeId"/>
+        <result column="winner_team_id" jdbcType="INTEGER" property="winnerTeamId"/>
+        <result column="season_id" jdbcType="INTEGER" property="seasonId"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, round_id, matchday, group_matchday, match_date, finished, live_status,
+        attendance, home_id, away_id, venue_id, referee_id, winner_team_id,season_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from match
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectBySe" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from match
+        where id = #{seId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByRoId" parameterType="java.lang.Integer" resultType="com.haiqiu.cfadata.poentity.MatchPO">
+        select
+        <include refid="Base_Column_List"/>
+        from match
+        where round_id = #{roId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByRoAndLm"  resultType="com.haiqiu.cfadata.poentity.MatchPO">
+        select
+        <include refid="Base_Column_List"/>
+        from match
+        where round_id = #{roId,jdbcType=INTEGER}
+        and last_modified>=#{lm,jdbcType=TIMESTAMP}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from match
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.MatchPO">
+        insert into match (id, round_id, matchday,
+        group_matchday, match_date, match_time,
+        finished, live_status, attendance,
+        home_id, away_id, venue_id,
+        referee_id, winner_team_id,season_id)
+        values (#{id,jdbcType=INTEGER}, #{roundId,jdbcType=INTEGER}, #{matchday,jdbcType=INTEGER},
+        #{groupMatchday,jdbcType=INTEGER}, #{matchDate,jdbcType=TIMESTAMP}, #{matchTime,jdbcType=VARCHAR},
+        #{finished,jdbcType=VARCHAR}, #{liveStatus,jdbcType=VARCHAR}, #{attendance,jdbcType=INTEGER},
+        #{homeId,jdbcType=INTEGER}, #{awayId,jdbcType=INTEGER}, #{venueId,jdbcType=INTEGER},
+        #{refereeId,jdbcType=INTEGER}, #{winnerTeamId,jdbcType=INTEGER},#{seasonId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.MatchPO">
+        insert into match
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="roundId != null">
+                round_id,
+            </if>
+            <if test="matchday != null">
+                matchday,
+            </if>
+            <if test="groupMatchday != null">
+                group_matchday,
+            </if>
+            <if test="matchDate != null">
+                match_date,
+            </if>
+            <if test="matchTime != null">
+                match_time,
+            </if>
+            <if test="finished != null">
+                finished,
+            </if>
+            <if test="liveStatus != null">
+                live_status,
+            </if>
+            <if test="attendance != null">
+                attendance,
+            </if>
+            <if test="homeId != null">
+                home_id,
+            </if>
+            <if test="awayId != null">
+                away_id,
+            </if>
+            <if test="venueId != null">
+                venue_id,
+            </if>
+            <if test="refereeId != null">
+                referee_id,
+            </if>
+            <if test="winnerTeamId != null">
+                winner_team_id,
+            </if>
+            <if test="seasonId != null">
+                season_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="roundId != null">
+                #{roundId,jdbcType=INTEGER},
+            </if>
+            <if test="matchday != null">
+                #{matchday,jdbcType=INTEGER},
+            </if>
+            <if test="groupMatchday != null">
+                #{groupMatchday,jdbcType=INTEGER},
+            </if>
+            <if test="matchDate != null">
+                #{matchDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="matchTime != null">
+                #{matchTime,jdbcType=VARCHAR},
+            </if>
+            <if test="finished != null">
+                #{finished,jdbcType=VARCHAR},
+            </if>
+            <if test="liveStatus != null">
+                #{liveStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="attendance != null">
+                #{attendance,jdbcType=INTEGER},
+            </if>
+            <if test="homeId != null">
+                #{homeId,jdbcType=INTEGER},
+            </if>
+            <if test="awayId != null">
+                #{awayId,jdbcType=INTEGER},
+            </if>
+            <if test="venueId != null">
+                #{venueId,jdbcType=INTEGER},
+            </if>
+            <if test="refereeId != null">
+                #{refereeId,jdbcType=INTEGER},
+            </if>
+            <if test="winnerTeamId != null">
+                #{winnerTeamId,jdbcType=INTEGER},
+            </if>
+            <if test="seasonId != null">
+                #{seasonId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.MatchPO">
+        update match
+        <set>
+            <if test="roundId != null">
+                round_id = #{roundId,jdbcType=INTEGER},
+            </if>
+            <if test="matchday != null">
+                matchday = #{matchday,jdbcType=INTEGER},
+            </if>
+            <if test="groupMatchday != null">
+                group_matchday = #{groupMatchday,jdbcType=INTEGER},
+            </if>
+            <if test="matchDate != null">
+                match_date = #{matchDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="matchTime != null">
+                match_time = #{matchTime,jdbcType=VARCHAR},
+            </if>
+            <if test="finished != null">
+                finished = #{finished,jdbcType=VARCHAR},
+            </if>
+            <if test="liveStatus != null">
+                live_status = #{liveStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="attendance != null">
+                attendance = #{attendance,jdbcType=INTEGER},
+            </if>
+            <if test="homeId != null">
+                home_id = #{homeId,jdbcType=INTEGER},
+            </if>
+            <if test="awayId != null">
+                away_id = #{awayId,jdbcType=INTEGER},
+            </if>
+            <if test="venueId != null">
+                venue_id = #{venueId,jdbcType=INTEGER},
+            </if>
+            <if test="refereeId != null">
+                referee_id = #{refereeId,jdbcType=INTEGER},
+            </if>
+            <if test="winnerTeamId != null">
+                winner_team_id = #{winnerTeamId,jdbcType=INTEGER},
+            </if>
+            <if test="seasonId != null">
+                season_id = #{seasonId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.MatchPO">
+        update match
+        set round_id = #{roundId,jdbcType=INTEGER},
+        matchday = #{matchday,jdbcType=INTEGER},
+        group_matchday = #{groupMatchday,jdbcType=INTEGER},
+        match_date = #{matchDate,jdbcType=TIMESTAMP},
+        match_time = #{matchTime,jdbcType=VARCHAR},
+        finished = #{finished,jdbcType=VARCHAR},
+        live_status = #{liveStatus,jdbcType=VARCHAR},
+        attendance = #{attendance,jdbcType=INTEGER},
+        home_id = #{homeId,jdbcType=INTEGER},
+        away_id = #{awayId,jdbcType=INTEGER},
+        venue_id = #{venueId,jdbcType=INTEGER},
+        referee_id = #{refereeId,jdbcType=INTEGER},
+        winner_team_id = #{winnerTeamId,jdbcType=INTEGER},
+        season_id = #{seasonId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteAll">
+        delete from match
+    </delete>
+</mapper>

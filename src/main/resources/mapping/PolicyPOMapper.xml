@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.PolicyPOMapper">
+  <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.PolicyPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="policy_order" jdbcType="INTEGER" property="policyOrder" />
+    <result column="policy_meta" jdbcType="VARCHAR" property="policyMeta" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, policy_order, policy_meta
+  </sql>
+  <select id="selectByExample" parameterType="com.haiqiu.cfadata.poentity.PolicyPOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from policy
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from policy
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from policy
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.PolicyPO">
+    insert into policy (id, policy_order, policy_meta
+      )
+    values (#{id,jdbcType=INTEGER}, #{policyOrder,jdbcType=INTEGER}, #{policyMeta,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.PolicyPO">
+    insert into policy
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="policyOrder != null">
+        policy_order,
+      </if>
+      <if test="policyMeta != null">
+        policy_meta,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="policyOrder != null">
+        #{policyOrder,jdbcType=INTEGER},
+      </if>
+      <if test="policyMeta != null">
+        #{policyMeta,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.PolicyPO">
+    update policy
+    <set>
+      <if test="policyOrder != null">
+        policy_order = #{policyOrder,jdbcType=INTEGER},
+      </if>
+      <if test="policyMeta != null">
+        policy_meta = #{policyMeta,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.PolicyPO">
+    update policy
+    set policy_order = #{policyOrder,jdbcType=INTEGER},
+      policy_meta = #{policyMeta,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

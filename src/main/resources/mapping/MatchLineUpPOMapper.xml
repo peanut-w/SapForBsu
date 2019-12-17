@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.MatchLineUpPOMapper">
+    <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.MatchLineUpPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="match_id" jdbcType="INTEGER" property="matchId"/>
+        <result column="team_id" jdbcType="INTEGER" property="teamId"/>
+        <result column="player_id" jdbcType="INTEGER" property="playerId"/>
+        <result column="player_num" jdbcType="INTEGER" property="playerNum"/>
+        <result column="player_type" jdbcType="INTEGER" property="playerType"/>
+        <result column="position" jdbcType="VARCHAR" property="position"/>
+        <result column="xposition" jdbcType="VARCHAR" property="xposition"/>
+        <result column="yposition" jdbcType="VARCHAR" property="yposition"/>
+        <result column="createdttm" jdbcType="TIMESTAMP" property="createdttm"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="updatedttm" jdbcType="TIMESTAMP" property="updatedttm"/>
+        <result column="updater" jdbcType="VARCHAR" property="updater"/>
+        <result column="datasource" jdbcType="VARCHAR" property="datasource"/>
+        <result column="lineup_name" jdbcType="INTEGER" property="lineupName"/>
+        <result column="position_type" jdbcType="VARCHAR" property="positionType"/>
+        <result column="player_icon" jdbcType="VARCHAR" property="playerIcon"/>
+        <result column="player_name" jdbcType="VARCHAR" property="playerName"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, match_id, team_id, player_id, player_num, player_type, position, xposition, yposition,
+    createdttm, creator, updatedttm, updater, datasource, lineup_name, position_type,
+    player_icon,player_name
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from match_lineup
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByTeamAndPlayer" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from match_lineup
+        where match_id = #{maId,jdbcType=INTEGER}
+        and team_id = #{teamId,jdbcType=INTEGER}
+        and player_id = #{playerId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectPlaysByMaId" parameterType="java.lang.Integer"
+            resultType="com.haiqiu.cfadata.doentity.PlayListDO">
+    select
+    match_id, team_id, player_id, player_num, player_type, position, xposition, yposition,
+    createdttm, creator, updatedttm, updater,dataSource,position_type,player_icon,player_name
+    from match_lineup
+    where match_id = #{maId,jdbcType=INTEGER}
+    </select>
+    <select id="selectLineUpNameByMa" parameterType="java.lang.Integer"
+            resultType="com.haiqiu.cfadata.doentity.LineUpNameDO">
+    select
+    distinct
+    team_id,lineup_name
+    from match_lineup
+    where match_id = #{maId,jdbcType=INTEGER}
+   </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from match_lineup
+    where id = #{id,jdbcType=INTEGER}
+   </delete>
+    <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.MatchLineUpPO">
+    insert into match_lineup (id, match_id, team_id,
+      player_id, player_num, player_type,
+      position, xposition, yposition,
+      createdttm, creator, updatedttm,
+      updater, datasource, lineup_name,
+      position_type, player_icon,player_name)
+    values (#{id,jdbcType=INTEGER}, #{matchId,jdbcType=INTEGER}, #{teamId,jdbcType=INTEGER},
+      #{playerId,jdbcType=INTEGER}, #{playerNum,jdbcType=INTEGER}, #{playerType,jdbcType=INTEGER},
+      #{position,jdbcType=VARCHAR}, #{xposition,jdbcType=VARCHAR}, #{yposition,jdbcType=VARCHAR},
+      #{createdttm,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{updatedttm,jdbcType=TIMESTAMP},
+      #{updater,jdbcType=VARCHAR}, #{datasource,jdbcType=VARCHAR}, #{lineupName,jdbcType=INTEGER},
+      #{positionType,jdbcType=VARCHAR}, #{playerIcon,jdbcType=VARCHAR},#{playerName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.MatchLineUpPO">
+        insert into match_lineup
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="matchId != null">
+                match_id,
+            </if>
+            <if test="teamId != null">
+                team_id,
+            </if>
+            <if test="playerId != null">
+                player_id,
+            </if>
+            <if test="playerNum != null">
+                player_num,
+            </if>
+            <if test="playerType != null">
+                player_type,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="xposition != null">
+                xposition,
+            </if>
+            <if test="yposition != null">
+                yposition,
+            </if>
+            <if test="createdttm != null">
+                createdttm,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="updatedttm != null">
+                updatedttm,
+            </if>
+            <if test="updater != null">
+                updater,
+            </if>
+            <if test="datasource != null">
+                datasource,
+            </if>
+            <if test="lineupName != null">
+                lineup_name,
+            </if>
+            <if test="positionType != null">
+                position_type,
+            </if>
+            <if test="playerIcon != null">
+                player_icon,
+            </if>
+            <if test="playerName != null">
+                player_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="matchId != null">
+                #{matchId,jdbcType=INTEGER},
+            </if>
+            <if test="teamId != null">
+                #{teamId,jdbcType=INTEGER},
+            </if>
+            <if test="playerId != null">
+                #{playerId,jdbcType=INTEGER},
+            </if>
+            <if test="playerNum != null">
+                #{playerNum,jdbcType=INTEGER},
+            </if>
+            <if test="playerType != null">
+                #{playerType,jdbcType=INTEGER},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="xposition != null">
+                #{xposition,jdbcType=VARCHAR},
+            </if>
+            <if test="yposition != null">
+                #{yposition,jdbcType=VARCHAR},
+            </if>
+            <if test="createdttm != null">
+                #{createdttm,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedttm != null">
+                #{updatedttm,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updater != null">
+                #{updater,jdbcType=VARCHAR},
+            </if>
+            <if test="datasource != null">
+                #{datasource,jdbcType=VARCHAR},
+            </if>
+            <if test="lineupName != null">
+                #{lineupName,jdbcType=INTEGER},
+            </if>
+            <if test="positionType != null">
+                #{positionType,jdbcType=VARCHAR},
+            </if>
+            <if test="playerIcon != null">
+                #{playerIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="playerName != null">
+                #{playerName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.MatchLineUpPO">
+        update match_lineup
+        <set>
+            <if test="matchId != null">
+                match_id = #{matchId,jdbcType=INTEGER},
+            </if>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=INTEGER},
+            </if>
+            <if test="playerId != null">
+                player_id = #{playerId,jdbcType=INTEGER},
+            </if>
+            <if test="playerNum != null">
+                player_num = #{playerNum,jdbcType=INTEGER},
+            </if>
+            <if test="playerType != null">
+                player_type = #{playerType,jdbcType=INTEGER},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="xposition != null">
+                xposition = #{xposition,jdbcType=VARCHAR},
+            </if>
+            <if test="yposition != null">
+                yposition = #{yposition,jdbcType=VARCHAR},
+            </if>
+            <if test="createdttm != null">
+                createdttm = #{createdttm,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedttm != null">
+                updatedttm = #{updatedttm,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updater != null">
+                updater = #{updater,jdbcType=VARCHAR},
+            </if>
+            <if test="datasource != null">
+                datasource = #{datasource,jdbcType=VARCHAR},
+            </if>
+            <if test="lineupName != null">
+                lineup_name = #{lineupName,jdbcType=INTEGER},
+            </if>
+            <if test="positionType != null">
+                position_type = #{positionType,jdbcType=VARCHAR},
+            </if>
+            <if test="playerIcon != null">
+                player_icon = #{playerIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="playerName != null">
+                player_name=#{playerName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.MatchLineUpPO">
+    update match_lineup
+    set match_id = #{matchId,jdbcType=INTEGER},
+      team_id = #{teamId,jdbcType=INTEGER},
+      player_id = #{playerId,jdbcType=INTEGER},
+      player_num = #{playerNum,jdbcType=INTEGER},
+      player_type = #{playerType,jdbcType=INTEGER},
+      position = #{position,jdbcType=VARCHAR},
+      xposition = #{xposition,jdbcType=VARCHAR},
+      yposition = #{yposition,jdbcType=VARCHAR},
+      createdttm = #{createdttm,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      updatedttm = #{updatedttm,jdbcType=TIMESTAMP},
+      updater = #{updater,jdbcType=VARCHAR},
+      datasource = #{datasource,jdbcType=VARCHAR},
+      lineup_name = #{lineupName,jdbcType=INTEGER},
+      position_type = #{positionType,jdbcType=VARCHAR},
+      player_icon = #{playerIcon,jdbcType=VARCHAR},
+      player_name=#{playerName,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

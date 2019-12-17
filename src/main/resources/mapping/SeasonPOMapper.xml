@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.SeasonPOMapper">
+    <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.SeasonPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="has_tables" jdbcType="VARCHAR" property="hasTables"/>
+        <result column="start" jdbcType="TIMESTAMP" property="start"/>
+        <result column="end" jdbcType="TIMESTAMP" property="end"/>
+        <result column="competition_id" jdbcType="INTEGER" property="competitionId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, has_tables, start, end, competition_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from season
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCoId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from season
+        where competition_id = #{coId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from season
+        where end >= #{start,jdbcType=TIMESTAMP}
+        and start &lt;= #{end,jdbcType=TIMESTAMP}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from season
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.SeasonPO">
+        insert into season (id, name, has_tables,
+        start, end, competition_id
+        )
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{hasTables,jdbcType=VARCHAR},
+        #{start,jdbcType=TIMESTAMP}, #{end,jdbcType=TIMESTAMP}, #{competitionId,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.SeasonPO">
+        insert into season
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="hasTables != null">
+                has_tables,
+            </if>
+            <if test="start != null">
+                start,
+            </if>
+            <if test="end != null">
+                end,
+            </if>
+            <if test="competitionId != null">
+                competition_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="hasTables != null">
+                #{hasTables,jdbcType=VARCHAR},
+            </if>
+            <if test="start != null">
+                #{start,jdbcType=TIMESTAMP},
+            </if>
+            <if test="end != null">
+                #{end,jdbcType=TIMESTAMP},
+            </if>
+            <if test="competitionId != null">
+                #{competitionId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.SeasonPO">
+        update season
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="hasTables != null">
+                has_tables = #{hasTables,jdbcType=VARCHAR},
+            </if>
+            <if test="start != null">
+                start = #{start,jdbcType=TIMESTAMP},
+            </if>
+            <if test="end != null">
+                end = #{end,jdbcType=TIMESTAMP},
+            </if>
+            <if test="competitionId != null">
+                competition_id = #{competitionId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.SeasonPO">
+        update season
+        set name = #{name,jdbcType=VARCHAR},
+        has_tables = #{hasTables,jdbcType=VARCHAR},
+        start = #{start,jdbcType=TIMESTAMP},
+        end = #{end,jdbcType=TIMESTAMP},
+        competition_id = #{competitionId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteAll">
+        delete from season
+    </delete>
+</mapper>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.MatchEventPOMapper">
+    <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.MatchEventPO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="match_id" jdbcType="INTEGER" property="matchId"/>
+        <result column="team_id" jdbcType="INTEGER" property="teamId"/>
+        <result column="person_id" jdbcType="INTEGER" property="personId"/>
+        <result column="team_person_id" jdbcType="INTEGER" property="teamPersonId"/>
+        <result column="additional_person_id" jdbcType="INTEGER" property="additionalPersonId"/>
+        <result column="action" jdbcType="VARCHAR" property="action"/>
+        <result column="kind" jdbcType="VARCHAR" property="kind"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="minute" jdbcType="INTEGER" property="minute"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, match_id, team_id, person_id, team_person_id, additional_person_id, action, kind,
+        content, minute, created
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from match_event
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectByMaId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from match_event
+        where match_id = #{maId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from match_event
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.MatchEventPO">
+        insert into match_event (id, match_id, team_id,
+        person_id, team_person_id, additional_person_id,
+        action, kind, content,
+        minute, created)
+        values (#{id,jdbcType=BIGINT}, #{matchId,jdbcType=INTEGER}, #{teamId,jdbcType=INTEGER},
+        #{personId,jdbcType=INTEGER}, #{teamPersonId,jdbcType=INTEGER}, #{additionalPersonId,jdbcType=INTEGER},
+        #{action,jdbcType=VARCHAR}, #{kind,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+        #{minute,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.MatchEventPO">
+        insert into match_event
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="matchId != null">
+                match_id,
+            </if>
+            <if test="teamId != null">
+                team_id,
+            </if>
+            <if test="personId != null">
+                person_id,
+            </if>
+            <if test="teamPersonId != null">
+                team_person_id,
+            </if>
+            <if test="additionalPersonId != null">
+                additional_person_id,
+            </if>
+            <if test="action != null">
+                action,
+            </if>
+            <if test="kind != null">
+                kind,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="minute != null">
+                minute,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="matchId != null">
+                #{matchId,jdbcType=INTEGER},
+            </if>
+            <if test="teamId != null">
+                #{teamId,jdbcType=INTEGER},
+            </if>
+            <if test="personId != null">
+                #{personId,jdbcType=INTEGER},
+            </if>
+            <if test="teamPersonId != null">
+                #{teamPersonId,jdbcType=INTEGER},
+            </if>
+            <if test="additionalPersonId != null">
+                #{additionalPersonId,jdbcType=INTEGER},
+            </if>
+            <if test="action != null">
+                #{action,jdbcType=VARCHAR},
+            </if>
+            <if test="kind != null">
+                #{kind,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="minute != null">
+                #{minute,jdbcType=INTEGER},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.MatchEventPO">
+        update match_event
+        <set>
+            <if test="matchId != null">
+                match_id = #{matchId,jdbcType=INTEGER},
+            </if>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=INTEGER},
+            </if>
+            <if test="personId != null">
+                person_id = #{personId,jdbcType=INTEGER},
+            </if>
+            <if test="teamPersonId != null">
+                team_person_id = #{teamPersonId,jdbcType=INTEGER},
+            </if>
+            <if test="additionalPersonId != null">
+                additional_person_id = #{additionalPersonId,jdbcType=INTEGER},
+            </if>
+            <if test="action != null">
+                action = #{action,jdbcType=VARCHAR},
+            </if>
+            <if test="kind != null">
+                kind = #{kind,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="minute != null">
+                minute = #{minute,jdbcType=INTEGER},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.MatchEventPO">
+        update match_event
+        set match_id = #{matchId,jdbcType=INTEGER},
+        team_id = #{teamId,jdbcType=INTEGER},
+        person_id = #{personId,jdbcType=INTEGER},
+        team_person_id = #{teamPersonId,jdbcType=INTEGER},
+        additional_person_id = #{additionalPersonId,jdbcType=INTEGER},
+        action = #{action,jdbcType=VARCHAR},
+        kind = #{kind,jdbcType=VARCHAR},
+        content = #{content,jdbcType=VARCHAR},
+        minute = #{minute,jdbcType=INTEGER},
+        created = #{created,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <delete id="deleteAll">
+        delete from match_event
+    </delete>
+</mapper>

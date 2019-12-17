@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.GfxPOMapper">
+    <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.GfxPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="uri" jdbcType="VARCHAR" property="uri"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="last_modified" jdbcType="TIMESTAMP" property="lastModified"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, uri, type, last_modified
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gfx
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from gfx
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.GfxPO">
+        insert into gfx (id, uri, type,
+        last_modified)
+        values (#{id,jdbcType=INTEGER}, #{uri,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+        #{lastModified,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.GfxPO">
+        insert into gfx
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uri != null">
+                uri,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="lastModified != null">
+                last_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="uri != null">
+                #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="lastModified != null">
+                #{lastModified,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.GfxPO">
+        update gfx
+        <set>
+            <if test="uri != null">
+                uri = #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+
+            last_modified = now(),
+
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.GfxPO">
+        update gfx
+        set uri = #{uri,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        last_modified = #{lastModified,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteAll">
+        delete from gfx
+    </delete>
+</mapper>

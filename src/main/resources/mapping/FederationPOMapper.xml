@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.FederationPOMapper">
+    <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.FederationPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="order" jdbcType="VARCHAR" property="order"/>
+        <result column="relation" jdbcType="VARCHAR" property="relation"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, order, relation
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from federation
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from federation
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.FederationPO">
+        insert into federation (id, name, order,
+        relation)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{order,jdbcType=VARCHAR},
+        #{relation,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.FederationPO">
+        insert into federation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="order != null">
+                order,
+            </if>
+            <if test="relation != null">
+                relation,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                #{order,jdbcType=VARCHAR},
+            </if>
+            <if test="relation != null">
+                #{relation,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.FederationPO">
+        update federation
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                order = #{order,jdbcType=VARCHAR},
+            </if>
+            <if test="relation != null">
+                relation = #{relation,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.FederationPO">
+        update federation
+        set name = #{name,jdbcType=VARCHAR},
+        order = #{order,jdbcType=VARCHAR},
+        relation = #{relation,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

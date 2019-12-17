@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haiqiu.cfadata.dao.ClubPOMapper">
+    <resultMap id="BaseResultMap" type="com.haiqiu.cfadata.poentity.ClubPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="starttime" jdbcType="TIMESTAMP" property="starttime"/>
+        <result column="last_modified" jdbcType="TIMESTAMP" property="lastModified"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, starttime, last_modified
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from club
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from club
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteAll">
+        delete from club
+    </delete>
+    <insert id="insert" parameterType="com.haiqiu.cfadata.poentity.ClubPO">
+        insert into club (id, name, starttime,
+        last_modified)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP},
+        #{lastModified,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.haiqiu.cfadata.poentity.ClubPO">
+        insert into club
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="starttime != null">
+                starttime,
+            </if>
+            <if test="lastModified != null">
+                last_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null">
+                #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastModified != null">
+                #{lastModified,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.haiqiu.cfadata.poentity.ClubPO">
+        update club
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null">
+                starttime = #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastModified != null">
+                last_modified = #{lastModified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.haiqiu.cfadata.poentity.ClubPO">
+        update club
+        set name = #{name,jdbcType=VARCHAR},
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+        last_modified = #{lastModified,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
